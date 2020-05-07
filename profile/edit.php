@@ -22,7 +22,7 @@
 
 <?php else : ?>
     <?php
-    if ($_SESSION['usertype'] != "Admin") {
+    if ($_SESSION['usertype'] != "Admin" + "Customer") {
         header("Location: ../login.php");
     }
     include '../db_extension.php';
@@ -31,26 +31,75 @@
     <!DOCTYPE html>
     <html lang="en">
 
+
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" href="../assets/css/style.css">
         <title>Edit Page</title>
     </head>
 
     <body>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            First Name: <input type="text" required name="firstname" value="<?php echo $user["FirstName"]; ?>" /> <br>
-            LastName: <input type="text" required name="lastname" value="<?php echo $user["LastName"]; ?>" /> <br>
-            User Name: <input type="text" required name="username" value="<?php echo $user["UserName"]; ?>" /> <br>
-            Email: <input type="text" required name="email" value="<?php echo $user["Email"]; ?>" /> <br>
-            Password: <input type="text" required name="password" value="<?php echo $user["Password"]; ?>" /> <br>
-            Address: <input type="text" required name="address" value="<?php echo $user["Address"]; ?>" /> <br>
-            <input type="submit">
-            <?php echo !empty($resultError) ? "error occured" : "" ?>
-        </form>
-        <?php if ($_SESSION['token']) : ?>
-            <a href="../logout.php">Logout</a>
-        <?php endif; ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-2"></div>
+                <div class="col-lg-6 col-md-8 login-box">
+                    <div class="col-lg-12 login-key">
+                        <i class="fa fa-register" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-lg-12 login-title">
+                        Register
+                    </div>
+
+                    <div class="col-lg-12 login-form">
+                        <div class="col-lg-12 login-form">
+
+
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                <div class="form-group">
+                                    <label class="form-control-label">First Name</label>
+                                    <input type="text" class="form-control" name="firstname" value="<?php echo $user["FirstName"]; ?>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Last Name</label>
+                                    <input type="text" class="form-control" name="lastname" value="<?php echo $user["LastName"]; ?>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">USERNAME</label>
+                                    <input type="text" class="form-control" name="username" value="<?php echo $user["UserName"]; ?>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Email</label>
+                                    <input type="text" class="form-control" name="email" value="<?php echo $user["Email"]; ?>" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Password</label>
+                                    <input type="password" name="password" required value="<?php echo $user["Password"]; ?>" class="form-control" i>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Address</label>
+                                    <input type="text" class="form-control" name="address" value="<?php echo $user["Address"]; ?>" required>
+                                </div>
+
+
+                                <div class="col-lg-12 loginbttm">
+                                    <div class="col-lg-6 login-btm login-text">
+                                        <?php echo !empty($resultError) ? "error occured" : "" ?>
+                                    </div>
+                                    <div class="col-lg-6 login-btm login-button">
+                                        <button type="submit" class="btn btn-outline-primary">Save</button>
+                                    </div>
+                                </div>
+                                <?php if ($_SESSION['token']) : ?>
+                                    <a href="../logout.php" class="logoutButton">Logout</a>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-2"> </div>
+                </div>
+            </div>
     </body>
 
     </html>

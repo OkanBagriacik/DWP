@@ -22,25 +22,60 @@
     <html lang="en">
 
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edit Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <title>Edit Product Page</title>
     </head>
 
-    <body>
-        Do you confirm to delete following entry?
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input name="id" hidden value="<?php echo $product["ProductID"]; ?>" />
-            ProductName: <?php echo $product["ProductName"]; ?> <br>
-            Price: <?php echo $product["Price"]; ?> <br>
-            Description: <?php echo $product["Description"]; ?> <br>
-            ImageURL: <?php echo $product["ImageURL"]; ?> <br>
 
-            <input type="submit" value="Delete">
-        </form>
-        <?php if ($_SESSION['token']) : ?>
-            <a href="../logout.php">Logout</a>
-        <?php endif; ?>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-2"></div>
+                <div class="col-lg-6 col-md-8 login-box">
+                    <div class="col-lg-12 login-title">
+                        Do you confirm to delete following entry?
+                    </div>
+                    <div class="col-lg-12 login-form">
+                        <div class="col-lg-12 login-form">
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                <input type="text" name="id" disabled hidden value="<?php echo $product["ProductID"]; ?>" />
+                                <div class="form-group">
+                                    <label class="form-control-label">Product Name</label>
+                                    <input type="text" disabled name="productname" value="<?php echo $product["ProductName"]; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Price</label>
+                                    <input type="text" disabled name="price" value="<?php echo $product["Price"]; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Description</label>
+                                    <input type="text" disabled name="description" value="<?php echo $product["Description"]; ?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Image URL</label>
+                                    <input type="text" disabled name="imageurl" value="<?php echo $product["ImageURL"]; ?>" />
+                                </div>
+                                <div class="col-lg-12 loginbttm">
+                                    <div class="col-lg-6 login-btm login-text">
+                                        <?php echo !empty($resultError) ? "error occured" : "" ?>
+                                    </div>
+                                    <div class="col-lg-6 login-btm login-button">
+                                        <input type="submit" value="Delete" class="btn btn-outline-primary">
+                                    </div>
+                                </div>
+
+                            </form>
+                            <?php if ($_SESSION['token']) : ?>
+                                <a href="../logout.php">Logout</a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
     </html>

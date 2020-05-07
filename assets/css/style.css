@@ -167,3 +167,7 @@ table caption {
 }
 
 /* table css END */
+
+input[type="text"]:disabled {
+    background-color: #222d32 !important;
+  }

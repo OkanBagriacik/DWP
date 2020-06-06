@@ -74,12 +74,12 @@ function updateUser($firstname, $lastname, $username, $email, $password, $addres
 }
 
 
-function addProduct($productname, $price, $description, $imageurl)
+function addProduct($productname, $productCategoryId, $price, $description, $imageurl)
 {
     $conn = connectDb();
 
-    $sql = "INSERT INTO products (ProductName, Price, Description, ImageURL)
-    VALUES ('{$productname}', '{$price}', '{$description}','{$imageurl}')";
+    $sql = "INSERT INTO products (ProductName, CategoryID, Price, Description, ImageURL)
+    VALUES ('{$productname}','{$productCategoryId}', '{$price}', '{$description}','{$imageurl}')";
 
     if ($conn->query($sql) === TRUE) {
         //"New product created successfully";
@@ -126,7 +126,7 @@ function getAllProducts()
 {
     $conn = connectDb();
 
-    $sql = "SELECT * FROM Products";
+    $sql = "SELECT * FROM Products INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID";
     $result = $conn->query($sql);
 
     try {
@@ -154,4 +154,236 @@ function deleteProduct($productId)
     }
 
     return false;
+}
+
+// product category operations 
+
+function getProductCategoryById($categoryId)
+{
+    $conn = connectDb();
+
+    $sql = "SELECT * FROM Categories WHERE CategoryId='{$categoryId}'";
+    $result = $conn->query($sql);
+
+    try {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row;
+        } else return null;
+    } catch (Exception $ex) {
+        return null;
+    }
+}
+
+function addCategory($categoryName)
+{
+    $conn = connectDb();
+
+    $sql = "INSERT INTO Categories (CategoryName)
+    VALUES ('{$categoryName}')";
+
+    if ($conn->query($sql) === TRUE) {
+        //"New product created successfully";
+        return true;
+    }
+    echo "Error: " . $sql . "<br>" . $conn->error;
+    return false;
+
+    $conn->close();
+}
+
+function deleteCategory($categoryId)
+{
+    $conn = connectDb();
+
+    $sql = "DELETE FROM Categories WHERE CategoryID={$categoryId}";
+
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    }
+
+    return false;
+}
+
+function listCategories()
+{
+    $conn = connectDb();
+
+    $sql = "SELECT * FROM Categories";
+    $result = $conn->query($sql);
+
+    try {
+        if ($result->num_rows > 0) {
+            $products = array();
+            while ($row = $result->fetch_assoc()) {
+                array_push($products, $row);
+            }
+
+            return $products;
+        } else return array();
+    } catch (Exception $ex) {
+        return array();
+    }
+}
+
+function editProductCategory($categoryId, $categoryName)
+{
+    $conn = connectDb();
+
+    $sql = "UPDATE Categories SET CategoryName='{$categoryName}' WHERE CategoryID='{$categoryId}'";
+
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    }
+
+    return false;
+}
+
+// cart operations
+function getCartProducts()
+{
+    $sessionId = session_id();
+    $conn = connectDb();
+
+    $sql = "SELECT * FROM Cart INNER JOIN CartProducts ON Cart.CartID = CartProducts.CartID INNER JOIN Products ON CartProducts.ProductID = Products.ProductID WHERE SessionID='{$sessionId}' ";
+    $result = $conn->query($sql);
+
+    try {
+        if ($result->num_rows > 0) {
+            $cartProducts = array();
+            while ($row = $result->fetch_assoc()) {
+                array_push($cartProducts, $row);
+            }
+
+            return $cartProducts;
+        } else return null;
+    } catch (Exception $ex) {
+        return null;
+    }
+}
+
+function getCart()
+{
+    $sessionId = session_id();
+    $conn = connectDb();
+
+    $sql = "SELECT * FROM Cart WHERE SessionID='{$sessionId}' ";
+    $result = $conn->query($sql);
+
+    try {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            return $row;
+        } else return null;
+    } catch (Exception $ex) {
+        return null;
+    }
+}
+
+function addToCart($productId)
+{
+    $cart = getCart();
+
+
+    if ($cart == null) {
+        createCart();
+        $cart = getCart();
+    }
+
+    $cartProducts = getCartProducts();
+    $product = null;
+
+    foreach ($cartProducts as $cartProduct) {
+        if ($productId == $cartProduct['ProductID']) {
+            $product = $cartProduct;
+            break;
+        }
+    }
+
+    if ($product) {
+        $currentQuantity = $product['ProductQuantity'];
+        updateCart($productId,  $currentQuantity + 1);
+    } else {
+        $conn = connectDb();
+        $cartId = $cart['CartID'];
+
+        $sql = "INSERT INTO CartProducts (CartID, ProductID, ProductQuantity) VALUES ('{$cartId}','{$productId}', 1)";
+
+        if ($conn->query($sql) === TRUE) {
+            //"New product created successfully";
+            return true;
+        }
+        echo "Error: " . $sql . "<br>" . $conn->error;
+        return false;
+
+        $conn->close();
+    }
+}
+
+function updateCart($productId, $updatedQuantity)
+{
+    $cart = getCart();
+    $conn = connectDb();
+
+    $sql = "UPDATE CartProducts SET ProductQuantity='{$updatedQuantity}' WHERE CartID='{$cart['CartID']}' AND ProductID = {$productId}";
+
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    }
+
+    return false;
+}
+
+function deleteProductFromCart($productId)
+{
+    $cart = getCart();
+    $cartID = $cart['CartID'];
+    $conn = connectDb();
+
+    $sql = "DELETE FROM CartProducts WHERE CartID={$cartID} AND ProductID={$productId}";
+
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    }
+
+    return false;
+}
+
+function deleteFromCart($productId)
+{
+    $cart = getCart();
+
+    $cartProducts = getCartProducts();
+    $product = null;
+
+    foreach ($cartProducts as $cartProduct) {
+        if ($productId == $cartProduct['ProductID']) {
+            $product = $cartProduct;
+            break;
+        }
+    }
+
+    if ($product) {
+        $currentQuantity = $product['ProductQuantity'];
+        updateCart($productId,  $currentQuantity - 1);
+    }
+}
+
+function createCart()
+{
+    $conn = connectDb();
+    $totalCost = 0;
+    $sessionId = session_id();
+    $sql = "INSERT INTO Cart (SessionID, TotalCost)
+    VALUES ('{$sessionId}', '{$totalCost}')";
+
+    if ($conn->query($sql) === TRUE) {
+        //"New product created successfully";
+        return true;
+    }
+    echo "Error: " . $sql . "<br>" . $conn->error;
+    return false;
+
+    $conn->close();
 }

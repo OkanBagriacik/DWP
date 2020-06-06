@@ -5,8 +5,8 @@
     $price = htmlspecialchars($_POST["price"]);
     $description = htmlspecialchars($_POST["description"]);
     $imageurl = htmlspecialchars($_POST["imageurl"]);
-
-    $result = addProduct($productname, $price, $description, $imageurl);
+    $productCatId = htmlspecialchars($_POST["productCategoryId"]);
+    $result = addProduct($productname, $productCatId, $price, $description, $imageurl);
 
     if ($result) {
         header("location: list.php");
@@ -19,6 +19,9 @@ session_start();
 if ($_SESSION['usertype'] != "Admin") {
     header("Location: ../login.php");
 }
+include '../db_extension.php';
+$productCategories = listCategories();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +50,15 @@ if ($_SESSION['usertype'] != "Admin") {
                                 <input type="text" required name="productname" />
                             </div>
                             <div class="form-group">
+                                <label class="form-control-label">Product Category</label>
+                                <select id="productCategory" name='productCategoryId'>
+                                    <?php for ($index = 0; $index < count($productCategories); $index++) : ?>
+                                        <option value="<?php echo $productCategories[$index]['CategoryID'] ?>"><?php echo $productCategories[$index]['CategoryName'] ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-control-label">Price</label>
                                 <input type="text" required name="price" />
                             </div>
@@ -68,9 +80,10 @@ if ($_SESSION['usertype'] != "Admin") {
                             </div>
 
                         </form>
-                        <?php if ($_SESSION['token']) : ?>
-                            <a href="../logout.php">Logout</a>
-                        <?php endif; ?>
+
+                        <!-- <a href="/" class="backtohome btn btn-info btn-lg">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Back to home
+                        </a> -->
                     </div>
                 </div>
             </div>

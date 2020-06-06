@@ -1,12 +1,12 @@
 <?php if (!empty($_POST)) : ?>
     <?php
     include './db_extension.php';
+    session_id(uniqid());
     session_start();
-
+    
     $user = login($_POST["username"], $_POST["password"]);
 
     if ($user != null) {
-
         $_SESSION["token"] = $user['UserName'];
         $_SESSION["usertype"] = $user['UserType'];
         $_SESSION["userid"] = $user['UserID'];

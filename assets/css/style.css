@@ -3,6 +3,12 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.backtohome {
+    position: fixed;
+    top: 40px;
+    left: 45px;
+}
+
 .login-box {
     margin: 150px 0px 150px 0px;
     height: auto;
@@ -127,9 +133,8 @@ label {
 }
 
 .indexPage {
-    margin: 0 500px 0px 500px;
     text-align: center;
-    padding: 25% 0px 47px 0px;
+    margin: 30px;
 }
 
 .logoutButton {
@@ -142,16 +147,18 @@ h2 {
     text-align: center;
 }
 
-td, th {
-    color: #ECF0F5;
+td,
+th {
+    color: rgb(0, 0, 0);
 }
 
 table caption {
     padding: .5em 0;
 }
 
-.table-hover>tbody>tr:hover>td,.table-hover>tbody>tr:hover>th {
-    background-color: #000000 !important
+.table-hover>tbody>tr:hover>td,
+.table-hover>tbody>tr:hover>th {
+    background-color: #b8b8b8 !important
 }
 
 @media screen and (max-width: 767px) {
@@ -170,4 +177,154 @@ table caption {
 
 input[type="text"]:disabled {
     background-color: #222d32 !important;
-  }
+}
+
+/* products card   */
+body {
+    padding: 1.5em;
+    background: #fff;
+    background: whitesmoke;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.container .product {
+    max-width: 610px;
+    padding: 9px;
+    max-height: 400px;
+    display: inline-flex;
+    margin: 1em 0;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0px 0px 21px 3px rgba(0, 0, 0, 0.15);
+    transition: all .1s ease-in-out;
+}
+
+.container .product:hover {
+    box-shadow: 0px 0px 21px 3px rgba(0, 0, 0, 0.11);
+}
+
+.container .product .img-container {
+    flex: 2;
+}
+
+.container .product .img-container img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.container .product .product-info {
+    background: #fff;
+    flex: 3;
+}
+
+.container .product .product-info .product-content {
+    padding: .2em 0 .2em 1em;
+}
+
+.container .product .product-info .product-content h1 {
+    font-size: 1.5em;
+}
+
+.container .product .product-info .product-content p {
+    color: #636363;
+    font-size: .9em;
+    font-weight: bold;
+    width: 90%;
+}
+
+.container .product .product-info .product-content ul li {
+    color: #636363;
+    font-size: .9em;
+    margin-left: 0;
+}
+
+.container .product .product-info .product-content .buttons {
+    padding-top: .4em;
+}
+
+.container .product .product-info .product-content .buttons .button {
+    text-decoration: none;
+    color: #5e5e5e;
+    font-weight: bold;
+    padding: .3em .65em;
+    border-radius: 2.3px;
+    transition: all .1s ease-in-out;
+}
+
+.container .product .product-info .product-content .buttons .add {
+    border: 1px #5e5e5e solid;
+}
+
+.container .product .product-info .product-content .buttons .add:hover {
+    border-color: #6997b6;
+    color: #6997b6;
+}
+
+.container .product .product-info .product-content .buttons .buy {
+    border: 1px #5e5e5e solid;
+}
+
+.container .product .product-info .product-content .buttons .buy:hover {
+    border-color: #6997b6;
+    color: #6997b6;
+}
+
+.container .product .product-info .product-content .buttons #price {
+    margin-left: 4em;
+    color: #5e5e5e;
+    font-weight: bold;
+    border: 1px solid rgba(137, 137, 137, 0.2);
+    background: rgba(137, 137, 137, 0.04);
+}
+
+/* products card END   */
+
+
+/* search container */
+.search-container input[type=text] {
+    padding: 6px;
+    margin: 40px 0px 20px 0px;
+    font-size: 17px;
+    border: none;
+    background-color: #dddddd !important;
+    color: black;
+}
+
+.search-container button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+
+    .search-container a,
+    .search-container input[type=text],
+    .search-container button {
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+
+    .search-container input[type=text] {
+        border: 1px solid #ccc;
+    }
+}
+
+/* search container END */

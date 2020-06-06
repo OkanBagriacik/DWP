@@ -4,7 +4,7 @@ if (!$_SESSION['token']) {
     header("Location: ../login.php");
 }
 include '../db_extension.php';
-$products = getAllProducts();
+$categories = listCategories();
 ?>
 
 <!DOCTYPE html>
@@ -16,12 +16,12 @@ $products = getAllProducts();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Register Page</title>
+    <title>Product Category Page</title>
 </head>
 
 
 <body>
-    <h2 style="color: #000">List all of Product</h2>
+    <h2 style="color: #000">List all of Product Categories</h2>
 
     <div class="container">
         <div class="row">
@@ -30,35 +30,18 @@ $products = getAllProducts();
                     <table summary="This table shows how to create responsive tables using Bootstrap's default functionality" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Product Name</th>
-                                <th>Product Category</th>
-                                <th>Price</th>
-                                <th>Description</th>
-                                <th>Image URL</th>
-                                <th>Edit </th>
+                                <th>Product Category Name</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php for ($index = 0; $index < count($products); $index++) : ?>
+                            <?php for ($index = 0; $index < count($categories); $index++) : ?>
                                 <tr>
                                     <td>
-                                        <?php echo $products[$index]["ProductName"] ?>
+                                        <?php echo $categories[$index]["CategoryName"] ?>
                                     </td>
                                     <td>
-                                        <?php echo $products[$index]["CategoryName"] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $products[$index]["Price"] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $products[$index]["Description"] ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $products[$index]["ImageURL"] ?>
-                                    </td>
-                                    <td>
-                                        <a href="./edit.php?productId=<?php echo $products[$index]["ProductID"] ?>" class="btn btn-outline-primary">Edit</a>
-                                        <a href="./delete.php?productId=<?php echo $products[$index]["ProductID"] ?>" class="btn btn-outline-primary">Delete</a>
+                                        <a href="./edit.php?categoryId=<?php echo $categories[$index]["CategoryID"] ?>" class="btn btn-outline-primary">Edit</a>
+                                        <a href="./delete.php?categoryId=<?php echo $categories[$index]["CategoryID"] ?>" class="btn btn-outline-primary">Delete</a>
                                     </td>
                                 </tr>
                             <?php endfor; ?>
@@ -69,7 +52,7 @@ $products = getAllProducts();
             </div>
         </div>
     </div>
-    <!-- <a href="/" class="backtohome btn btn-info btn-lg">
+        <!-- <a href="/" class="backtohome btn btn-info btn-lg">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Back to home
                         </a> -->
 </body>

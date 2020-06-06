@@ -2,12 +2,9 @@
     <?php
     include '../db_extension.php';
     $id = htmlspecialchars($_POST["id"]);
-    $productname = htmlspecialchars($_POST["productname"]);
-    $price = htmlspecialchars($_POST["price"]);
-    $description = htmlspecialchars($_POST["description"]);
-    $imageurl = htmlspecialchars($_POST["imageurl"]);
+    $categoryname = htmlspecialchars($_POST["categoryname"]);
 
-    $result = updateProduct($id, $productname, $price, $description, $imageurl);
+    $result = editProductCategory($id, $categoryname);
 
     if ($result) {
         header("location: list.php");
@@ -21,7 +18,7 @@
         header("Location: ../login.php");
     }
     include '../db_extension.php';
-    $product = getProduct(htmlspecialchars($_GET["productId"]));
+    $product = getProductCategoryById(htmlspecialchars($_GET["categoryId"]));
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -32,7 +29,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="../assets/css/style.css">
-        <title>Edit Product Page</title>
+        <title>Edit Product Category Page</title>
     </head>
 
     <body>
@@ -41,27 +38,15 @@
                 <div class="col-lg-3 col-md-2"></div>
                 <div class="col-lg-6 col-md-8 login-box">
                     <div class="col-lg-12 login-title">
-                        Edit Product
+                        Edit Product Category
                     </div>
                     <div class="col-lg-12 login-form">
                         <div class="col-lg-12 login-form">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <input type="text" name="id" required hidden value="<?php echo $product["ProductID"]; ?>" />
+                                <input type="text" name="id" required hidden value="<?php echo $product["CategoryID"]; ?>" />
                                 <div class="form-group">
-                                    <label class="form-control-label">Product Name</label>
-                                    <input type="text" required name="productname" value="<?php echo $product["ProductName"]; ?>" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-control-label">Price</label>
-                                    <input type="text" required name="price" value="<?php echo $product["Price"]; ?>" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-control-label">Description</label>
-                                    <input type="text" required name="description" value="<?php echo $product["Description"]; ?>" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-control-label">Image URL</label>
-                                    <input type="text" required name="imageurl" value="<?php echo $product["ImageURL"]; ?>" />
+                                    <label class="form-control-label">Category Name</label>
+                                    <input type="text" required name="categoryname" value="<?php echo $product["CategoryName"]; ?>" />
                                 </div>
                                 <div class="col-lg-12 loginbttm">
                                     <div class="col-lg-6 login-btm login-text">
@@ -73,7 +58,7 @@
                                 </div>
 
                             </form>
-                           <!-- <a href="/" class="backtohome btn btn-info btn-lg">
+                              <!-- <a href="/" class="backtohome btn btn-info btn-lg">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Back to home
                         </a> -->
                         </div>

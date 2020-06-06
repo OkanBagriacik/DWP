@@ -16,6 +16,7 @@
         header("Location: ../login.php");
     }
     include '../db_extension.php';
+    
     $product = getProduct(htmlspecialchars($_GET["productId"]));
     ?>
     <!DOCTYPE html>
@@ -41,7 +42,7 @@
                     <div class="col-lg-12 login-form">
                         <div class="col-lg-12 login-form">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <input type="text" name="id" disabled hidden value="<?php echo $product["ProductID"]; ?>" />
+                                <input type="text" name="id"  hidden value="<?php echo $product["ProductID"]; ?>" />
                                 <div class="form-group">
                                     <label class="form-control-label">Product Name</label>
                                     <input type="text" disabled name="productname" value="<?php echo $product["ProductName"]; ?>" />
@@ -68,9 +69,9 @@
                                 </div>
 
                             </form>
-                            <?php if ($_SESSION['token']) : ?>
-                                <a href="../logout.php">Logout</a>
-                            <?php endif; ?>
+                         <!-- <a href="/" class="backtohome btn btn-info btn-lg">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Back to home
+                        </a> -->
                         </div>
                     </div>
                 </div>

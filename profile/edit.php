@@ -91,9 +91,10 @@
                                         <button type="submit" class="btn btn-outline-primary">Save</button>
                                     </div>
                                 </div>
-                                <?php if ($_SESSION['token']) : ?>
-                                    <a href="../logout.php" class="logoutButton">Logout</a>
-                                <?php endif; ?>
+
+                                     <!-- <a href="/" class="backtohome btn btn-info btn-lg">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Back to home
+                        </a> -->
                             </form>
                         </div>
                     </div>

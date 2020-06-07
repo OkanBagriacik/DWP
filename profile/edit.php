@@ -22,7 +22,7 @@
 
 <?php else : ?>
     <?php
-    if ($_SESSION['usertype'] != "Admin" + "Customer") {
+    if ($_SESSION['usertype'] != "Admin"  && $_SESSION['usertype'] != "Customer") {
         header("Location: ../login.php");
     }
     include '../db_extension.php';
@@ -93,8 +93,8 @@
                                 </div>
 
                                 <a href="/" class="backtohome btn btn-info btn-lg">
-                            <span class="glyphicon glyphicon glyphicon-home"></span> Back to home
-                        </a>
+                                    <span class="glyphicon glyphicon glyphicon-home"></span> Back to home
+                                </a>
                             </form>
                         </div>
                     </div>

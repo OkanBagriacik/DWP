@@ -146,7 +146,6 @@ function getAllProducts()
 function deleteProduct($productId)
 {
     $conn = connectDb();
-
     $sql = "DELETE FROM Products WHERE ProductID={$productId}";
 
     if ($conn->query($sql) === TRUE) {
@@ -268,9 +267,8 @@ function getCart()
     $sessionId = session_id();
     $conn = connectDb();
 
-    echo 123;
 
-    $sql = "SELECT * FROM Cart WHERE SessionID='{$sessionId}' ";
+    $sql = "SELECT * FROM Cart WHERE SessionID='{$sessionId}'";
     $result = $conn->query($sql);
 
     try {
@@ -390,4 +388,21 @@ function createCart()
     return false;
 
     $conn->close();
+}
+
+//confim order
+function confirmOrder()
+{
+    $cart = getCart();
+    $conn = connectDb();
+    $sessionId = session_id();
+    $confirmedOrder = true;
+
+    $sql = "UPDATE Cart SET ConfirmedStatus={$confirmedOrder} WHERE SessionID='{$sessionId}' ";
+
+    if ($conn->query($sql) === TRUE) {
+        return true;
+    }
+
+    return false;
 }

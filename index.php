@@ -71,7 +71,6 @@ $products = getAllProducts();
                                 <li>Categories</li>
                             </ul>
                             <div class="buttons">
-                                <a class="button buy" href="#">Buy</a>
                                 <form method="post" id='addToCart' action="./index.php?type=addToCart&productId=<?php echo $products[$index]["ProductID"] ?>">
                                     <input type="submit" name="addToCart" class="button add" value="Add to Cart" />
                                 </form>

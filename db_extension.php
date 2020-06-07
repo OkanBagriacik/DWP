@@ -243,6 +243,7 @@ function editProductCategory($categoryId, $categoryName)
 function getCartProducts()
 {
     $sessionId = session_id();
+
     $conn = connectDb();
 
     $sql = "SELECT * FROM Cart INNER JOIN CartProducts ON Cart.CartID = CartProducts.CartID INNER JOIN Products ON CartProducts.ProductID = Products.ProductID WHERE SessionID='{$sessionId}' ";
@@ -267,6 +268,8 @@ function getCart()
     $sessionId = session_id();
     $conn = connectDb();
 
+    echo 123;
+
     $sql = "SELECT * FROM Cart WHERE SessionID='{$sessionId}' ";
     $result = $conn->query($sql);
 
@@ -285,21 +288,24 @@ function addToCart($productId)
 {
     $cart = getCart();
 
-
     if ($cart == null) {
         createCart();
         $cart = getCart();
     }
 
     $cartProducts = getCartProducts();
+
     $product = null;
 
-    foreach ($cartProducts as $cartProduct) {
-        if ($productId == $cartProduct['ProductID']) {
-            $product = $cartProduct;
-            break;
+    if (count($cartProducts) > 0) {
+        foreach ($cartProducts as $cartProduct) {
+            if ($productId == $cartProduct['ProductID']) {
+                $product = $cartProduct;
+                break;
+            }
         }
     }
+
 
     if ($product) {
         $currentQuantity = $product['ProductQuantity'];
@@ -352,8 +358,6 @@ function deleteProductFromCart($productId)
 
 function deleteFromCart($productId)
 {
-    $cart = getCart();
-
     $cartProducts = getCartProducts();
     $product = null;
 

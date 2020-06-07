@@ -3,7 +3,7 @@
     include './db_extension.php';
     session_id(uniqid());
     session_start();
-    
+
     $user = login($_POST["username"], $_POST["password"]);
 
     if ($user != null) {

@@ -1,5 +1,22 @@
 <?php
+include './db_extension.php';
 session_start();
+?>
+<?php if (!empty($_POST)) : ?>
+    <?php
+    echo 'sda';
+    $type =  htmlspecialchars($_GET["type"]);
+    $productId =  htmlspecialchars($_GET["productId"]);
+
+    if ($type == 'addToCart') {
+        addToCart($productId);
+        header('Location: index.php');
+    }
+
+    ?>
+<?php endif; ?>
+<?php
+
 $username = "root";
 $password = "admin";
 
@@ -11,12 +28,10 @@ try {
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
-?>
-<?php
+
 if (!$_SESSION['token']) {
     header("Location: ../login.php");
 }
-include './db_extension.php';
 $products = getAllProducts();
 ?>
 
@@ -28,25 +43,19 @@ $products = getAllProducts();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="./assets/css/style.css">
+
 </head>
 
 <body>
     <?php if (isset($_SESSION['token'])) : ?>
         <div class="indexPage">
             <a href="./product/list.php"><button class="btn btn-outline-primary">Products</button></a>
-            <a href="./product/add.php"><button class="btn btn-outline-primary">Add New Products</button></a>
             <a href="./productCategory/list.php"><button class="btn btn-outline-primary">Product Categories</button></a>
             <a href="./profile/edit.php"><button class="btn btn-outline-primary">Profile</button></a>
             <a href="./logout.php"><button class="btn btn-outline-primary">Log out</button></a>
             <a href="./cart/cart.php" class="btn btn-info btn-lg">
                 <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
             </a>
-            <div class="search-container">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Search.." name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
         </div>
         <div class="container">
             <?php for ($index = 0; $index < count($products); $index++) : ?>
@@ -63,7 +72,9 @@ $products = getAllProducts();
                             </ul>
                             <div class="buttons">
                                 <a class="button buy" href="#">Buy</a>
-                                <a class="button add" href="#">Add to Cart</a>
+                                <form method="post" id='addToCart' action="./index.php?type=addToCart&productId=<?php echo $products[$index]["ProductID"] ?>">
+                                    <input type="submit" name="addToCart" class="button add" value="Add to Cart" />
+                                </form>
                                 <span class="button" id="price"> <?php echo $products[$index]["Price"] ?>TL</span>
                             </div>
                         </div>
@@ -78,7 +89,9 @@ $products = getAllProducts();
             <a href="./register.php"><button class="btn btn-outline-primary">Register</button></a>
         </div>
     <?php endif; ?>
+    <script>
 
+    </script>
 </body>
 
 </html>

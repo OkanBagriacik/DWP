@@ -2,8 +2,27 @@
 include '../db_extension.php';
 session_start();
 
+if (isset($_GET['type'])) {
+  if ($_GET['type'] == 'increment') {
+    addToCart(htmlspecialchars($_GET["productId"]));
+  } else if ($_GET['type'] == 'decrement') {
+    deleteFromCart(htmlspecialchars($_GET["productId"]));
+  } else if ($_GET['type'] == 'remove') {
+    deleteProductFromCart(htmlspecialchars($_GET["productId"]));
+  }
+
+  header('Location: cart.php');
+}
+
+
 $cartProducts =  getCartProducts();
+$totalCost = 0;
+foreach ($cartProducts as $product) {
+  $totalCost += $product['ProductQuantity'] * $product['Price'];
+}
+
 ?>
+
 <!DOCTYPE html>
 <html class="nodarken">
 
@@ -15,6 +34,7 @@ $cartProducts =  getCartProducts();
       font-family: Arial;
       font-size: 17px;
       padding: 8px;
+      margin: 50px 100px 50px 100px;
     }
 
     * {
@@ -125,8 +145,8 @@ $cartProducts =  getCartProducts();
 
 <body>
 
-  <h2>Responsive Checkout Form</h2>
-  <p>Resize the browser window to see the effect. When the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other.</p>
+  <h2>Checkout Page</h2>
+
   <div class="row">
     <div class="col-75">
       <div class="container">
@@ -164,26 +184,38 @@ $cartProducts =  getCartProducts();
                       <th>Product Name</th>
                       <th>Price</th>
                       <th>Quantity</th>
+                      <th>Total</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <?php for ($index = 0; $index < count($cartProducts); $index++) : ?>
-                      <tr>
-                        <td>
-                          <?php echo $cartProducts[$index]["ProductName"] ?>
-                        </td>
-                        <td>
-                          <?php echo $cartProducts[$index]["Price"] ?>
-                        </td>
-                        <td>
-                          <a href="./edit.php?productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary">-</a>
-                          <?php echo $cartProducts[$index]["ProductQuantity"] ?>
-                          <a href="./delete.php?productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary">+</a>
-                          <a style="color:red;" href="./delete.php?productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary">x</a>
-                        </td>
-                      </tr>
-                    <?php endfor; ?>
-                  </tbody>
+                  <?php if ($cartProducts != null) : ?>
+                    <tbody>
+                      <?php for ($index = 0; $index < count($cartProducts); $index++) : ?>
+                        <tr>
+                          <td>
+                            <?php echo $cartProducts[$index]["ProductName"] ?>
+                          </td>
+                          <td>
+                            <?php echo $cartProducts[$index]["Price"] ?>
+                          </td>
+                          <td>
+                            <a href="./cart.php?type=decrement&productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary" style="margin: 5px 5px 0px 5px !important;
+    padding: 7px !important;">-</a>
+                            <?php echo $cartProducts[$index]["ProductQuantity"] ?>
+                            <a href="./cart.php?type=increment&productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary" style="margin: 5px 5px 0px 5px !important;
+    padding: 7px !important;">+</a>
+                          </td>
+                          <td>
+                            <?php echo $totalCost?>₺
+                          </td>
+                          <td>
+                            <a href="./cart.php?type=remove&productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary" style="color:red; margin: 5px 5px 0px 5px !important;
+    padding: 7px !important;">x</a>
+                          </td>
+                        </tr>
+                      <?php endfor; ?>
+                    </tbody>
+                  <?php endif; ?>
                 </table>
               </div>
             </div>

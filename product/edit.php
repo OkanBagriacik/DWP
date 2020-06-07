@@ -73,9 +73,9 @@
                                 </div>
 
                             </form>
-                           <!-- <a href="/" class="backtohome btn btn-info btn-lg">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> Back to home
-                        </a> -->
+                            <a href="/" class="backtohome btn btn-info btn-lg">
+                            <span class="glyphicon glyphicon glyphicon-home"></span> Back to home
+                        </a>
                         </div>
                     </div>
                 </div>

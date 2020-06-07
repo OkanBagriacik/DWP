@@ -22,7 +22,11 @@ $categories = listCategories();
 
 <body>
     <h2 style="color: #000">List all of Product Categories</h2>
-
+    <a href="add.php" style="position: fixed;
+    top: 34px;
+    right: 32%;" class="btn btn-success btn-lg">
+        <span class="glyphicon glyphicon glyphicon-plus-sign"></span> Add new Category
+    </a>
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
@@ -52,9 +56,9 @@ $categories = listCategories();
             </div>
         </div>
     </div>
-        <!-- <a href="/" class="backtohome btn btn-info btn-lg">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> Back to home
-                        </a> -->
+    <a href="/" class="backtohome btn btn-info btn-lg">
+        <span class="glyphicon glyphicon glyphicon-home"></span> Back to home
+    </a>
 </body>
 
 </html>

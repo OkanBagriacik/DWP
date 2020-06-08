@@ -1,4 +1,4 @@
-/* changes a product properties */
+<!--changes a product properties-->
 <?php if (!empty($_POST)) : ?>
     <?php
     include '../db_extension.php';

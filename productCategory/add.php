@@ -1,4 +1,4 @@
-/* creates a new product category */
+<!-- creates a new product category -->
 <?php if (!empty($_POST)) : ?>
     <?php
     include '../db_extension.php';

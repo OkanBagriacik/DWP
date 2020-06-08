@@ -1,4 +1,4 @@
-/* changes a product category properties */
+<!-- changes a product category properties -->
 <?php if (!empty($_POST)) : ?>
     <?php
     include '../db_extension.php';

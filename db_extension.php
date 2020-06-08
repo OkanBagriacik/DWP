@@ -256,7 +256,7 @@ function getCartProducts()
 
     $conn = connectDb();
 
-    $sql = "SELECT * FROM Cart INNER JOIN CartProducts ON Cart.CartID = CartProducts.CartID INNER JOIN Products ON CartProducts.ProductID = Products.ProductID WHERE SessionID='{$sessionId}' ";
+    $sql = "SELECT * FROM Cart INNER JOIN CartProducts ON Cart.CartID = CartProducts.CartID INNER JOIN Products ON CartProducts.ProductID = Products.ProductID WHERE SessionID='{$sessionId}' AND ConfirmedStatus = false";
     $result = $conn->query($sql);
 
     try {
@@ -280,7 +280,7 @@ function getCart()
     $conn = connectDb();
 
 
-    $sql = "SELECT * FROM Cart WHERE SessionID='{$sessionId}'";
+    $sql = "SELECT * FROM Cart WHERE SessionID='{$sessionId}' AND ConfirmedStatus = false";
     $result = $conn->query($sql);
 
     try {
@@ -303,6 +303,7 @@ function addToCart($productId)
         createCart();
         $cart = getCart();
     }
+
 
     $cartProducts = getCartProducts();
 

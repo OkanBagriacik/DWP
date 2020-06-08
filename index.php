@@ -1,4 +1,4 @@
-/* start page(main page) application starts from this page*/
+<!-- start page(main page) application starts from this page -->
 <?php
 include './db_extension.php';
 session_start();
@@ -73,7 +73,7 @@ $products = getAllProducts();
                             </ul>
                             <div class="buttons">
                                 <form method="post" id='addToCart' action="./index.php?type=addToCart&productId=<?php echo $products[$index]["ProductID"] ?>">
-                                    <input type="submit" name="addToCart" class="button add" value="Add to Cart" />
+                                    <input required type="submit" name="addToCart" class="button add" value="Add to Cart" />
                                 </form>
                                 <span class="button" id="price"> <?php echo $products[$index]["Price"] ?>TL</span>
                             </div>

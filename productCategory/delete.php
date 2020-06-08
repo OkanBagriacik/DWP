@@ -1,4 +1,4 @@
-/* removes a product category from database */
+<!-- removes a product category from database -->
 <?php if (!empty($_POST)) : ?>
     <?php
     include '../db_extension.php';

@@ -1,4 +1,4 @@
-/* lists all the product categories saved to the database */
+<!-- lists all the product categories saved to the database -->
 <?php
 session_start();
 if (!$_SESSION['token']) {
@@ -25,7 +25,7 @@ $categories = listCategories();
     <h2 style="color: #000">List all of Product Categories</h2>
     <a href="add.php" style="position: fixed;
     top: 34px;
-    right: 32%;" class="btn btn-success btn-lg">
+    right: 25%;" class="btn btn-success btn-lg">
         <span class="glyphicon glyphicon glyphicon-plus-sign"></span> Add new Category
     </a>
     <div class="container">

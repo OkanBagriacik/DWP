@@ -1,4 +1,4 @@
-/* cart page, shows the products in the current user cart */
+<!-- cart page, shows the products in the current user cart -->
 <?php
 include '../db_extension.php';
 session_start();
@@ -18,9 +18,12 @@ if (isset($_GET['type'])) {
 
 $cartProducts =  getCartProducts();
 $totalCost = 0;
-foreach ($cartProducts as $product) {
-  $totalCost += $product['ProductQuantity'] * $product['Price'];
+if ($cartProducts != null) {
+  foreach ($cartProducts as $product) {
+    $totalCost += $product['ProductQuantity'] * $product['Price'];
+  }
 }
+
 
 ?>
 
@@ -151,28 +154,28 @@ foreach ($cartProducts as $product) {
   <div class="row">
     <div class="col-75">
       <div class="container">
-        <form action="/action_page.php">
+        <form action="method.php">
 
           <div class="row">
             <div class="col-50">
               <h3>Billing Address</h3>
               <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-              <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+              <input required type="text" id="fname" name="firstname" placeholder="John M. Doe">
               <label for="email"><i class="fa fa-envelope"></i> Email</label>
-              <input type="text" id="email" name="email" placeholder="john@example.com">
+              <input required type="text" id="email" name="email" placeholder="john@example.com">
               <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-              <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+              <input required type="text" id="adr" name="address" placeholder="542 W. 15th Street">
               <label for="city"><i class="fa fa-institution"></i> City</label>
-              <input type="text" id="city" name="city" placeholder="New York">
+              <input required type="text" id="city" name="city" placeholder="New York">
 
               <div class="row">
                 <div class="col-50">
                   <label for="state">State</label>
-                  <input type="text" id="state" name="state" placeholder="NY">
+                  <input required type="text" id="state" name="state" placeholder="NY">
                 </div>
                 <div class="col-50">
                   <label for="zip">Zip</label>
-                  <input type="text" id="zip" name="zip" placeholder="10001">
+                  <input required type="text" id="zip" name="zip" placeholder="10001">
                 </div>
               </div>
             </div>
@@ -207,7 +210,7 @@ foreach ($cartProducts as $product) {
     padding: 7px !important;">+</a>
                           </td>
                           <td>
-                            <?php echo $totalCost?>₺
+                            <?php echo $totalCost ?>₺
                           </td>
                           <td>
                             <a href="./cart.php?type=remove&productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary" style="color:red; margin: 5px 5px 0px 5px !important;
@@ -226,9 +229,9 @@ foreach ($cartProducts as $product) {
             <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
           </label>
 
-          <a href="method.php">
-            <input type="button" value="Continue to checkout" class="btn" />
-          </a>
+
+          <input type="submit" value="Continue to checkout" class="btn" />
+
           <hr />
 
           <a href="/">

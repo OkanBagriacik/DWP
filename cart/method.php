@@ -1,4 +1,4 @@
-/*  let the user to choose a payment option */
+<!-- let the user to choose a payment option -->
 <?php
 include '../db_extension.php';
 session_start();
@@ -7,11 +7,10 @@ session_start();
 <?php if (!empty($_POST)) : ?>
   <?php
 
-  echo 'asdasd';
   $result = confirmOrder();
 
   if ($result) {
-    session_regenerate_id();
+    $_SESSION['CartID'] = null;
     header("location: success.php");
   } else $resultError = true;
   ?>
@@ -20,6 +19,9 @@ session_start();
 
   $cartProducts =  getCartProducts();
   $totalCost = 0;
+  if (count($cartProducts) <= 0) {
+    header('Location: ../index.php');
+  }
   foreach ($cartProducts as $product) {
     $totalCost += $product['ProductQuantity'] * $product['Price'];
   }
@@ -40,48 +42,50 @@ session_start();
       <div class="panel-body">
         <h2 class="title">Checkout Method</h2>
         <div class="payment-method">
-          <label for="card" class="method card">
-            <div class="card-logos">
-              <img src="https://designmodo.com/demo/checkout-panel/img/visa_logo.png" />
-              <img src="https://designmodo.com/demo/checkout-panel/img/mastercard_logo.png" />
-            </div>
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <label for="card" class="method card">
+              <div class="card-logos">
+                <img src="https://designmodo.com/demo/checkout-panel/img/visa_logo.png" />
+                <img src="https://designmodo.com/demo/checkout-panel/img/mastercard_logo.png" />
+              </div>
 
-            <div class="radio-input">
-              <input id="card" type="radio" name="payment">
-              Pay <?php echo $totalCost ?>₺ with credit card
-            </div>
-          </label>
+              <div class="radio-input">
+                <input required id="card" type="radio" name="payment">
+                Pay <?php echo $totalCost ?>₺ with credit card
+              </div>
+            </label>
 
-          <label for="paypal" class="method paypal">
-            <img src="https://designmodo.com/demo/checkout-panel/img/paypal_logo.png" />
-            <div class="radio-input">
-              <input id="paypal" type="radio" name="payment">
-              Pay <?php echo $totalCost ?>₺ with PayPal
-            </div>
-          </label>
+            <label for="paypal" class="method paypal">
+              <img src="https://designmodo.com/demo/checkout-panel/img/paypal_logo.png" />
+              <div class="radio-input">
+                <input required id="paypal" type="radio" name="payment">
+                Pay <?php echo $totalCost ?>₺ with PayPal
+              </div>
+            </label>
+
         </div>
 
         <div class="input-fields">
           <div class="column-1">
             <label for="cardholder">Cardholder's Name</label>
-            <input type="text" id="cardholder" />
+            <input required type="text" id="cardholder" />
 
             <div class="small-inputs">
               <div>
                 <label for="date">Valid thru</label>
-                <input type="text" id="date" placeholder="MM / YY" />
+                <input required type="text" id="date" placeholder="MM / YY" />
               </div>
 
               <div>
                 <label for="verification">CVV / CVC *</label>
-                <input type="password" id="verification" />
+                <input required type="password" id="verification" />
               </div>
             </div>
 
           </div>
           <div class="column-2">
             <label for="cardnumber">Card Number</label>
-            <input type="password" id="cardnumber" />
+            <input required type="password" id="cardnumber" />
 
             <span class="info">* CVV or CVC is the card security code, unique three digits number on the back of your card separate from its number.</span>
           </div>
@@ -90,8 +94,8 @@ session_start();
 
       <div class="panel-footer">
         <a href="cart.php"><button class="btn back-btn">Back</button></a>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-          <input type="submit" name="submitBtn" class="btn next-btn" value="Pay Now" />
+
+        <input type="submit" name="submitBtn" class="btn next-btn" value="Pay Now" />
         </form>
       </div>
     </div>

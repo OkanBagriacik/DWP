@@ -1,4 +1,4 @@
-/* creates a new product */
+<!-- creates a new product -->
 <?php if (!empty($_POST)) : ?>
     <?php
     include '../db_extension.php';
@@ -48,7 +48,7 @@ $productCategories = listCategories();
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <div class="form-group">
                                 <label class="form-control-label">Product Name</label>
-                                <input type="text" required name="productname" />
+                                <input required type="text" required name="productname" />
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label">Product Category</label>
@@ -61,22 +61,22 @@ $productCategories = listCategories();
 
                             <div class="form-group">
                                 <label class="form-control-label">Price</label>
-                                <input type="text" required name="price" />
+                                <input  type="text" required name="price" />
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label">Description</label>
-                                <input type="text" required name="description" />
+                                <input  type="text" required name="description" />
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label">Image URL</label>
-                                <input type="text" required name="imageurl" />
+                                <input  type="text" required name="imageurl" />
                             </div>
                             <div class="col-lg-12 loginbttm">
                                 <div class="col-lg-6 login-btm login-text">
                                     <?php echo !empty($resultError) ? "error occured" : "" ?>
                                 </div>
                                 <div class="col-lg-6 login-btm login-button">
-                                    <input type="submit" class="btn btn-outline-primary">
+                                    <input required type="submit" class="btn btn-outline-primary">
                                 </div>
                             </div>
 

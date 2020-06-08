@@ -1,4 +1,4 @@
-/* creates anew user */
+<!-- creates a new user -->
 <style>
     /* form{
         display: flex;

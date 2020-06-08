@@ -1,4 +1,4 @@
-/* this page allows the user to login to the application */
+<!-- this page allows the user to login to the application -->
 <?php if (!empty($_POST)) : ?>
     <?php
     include './db_extension.php';

@@ -1,4 +1,4 @@
-/* redirect user to this page after a successful payment */
+
 <script>setTimeout(function() { location.replace("../index.php")},2000);</script>
 
 <html>

@@ -1,4 +1,3 @@
-/*  lets the current user to change its profile information for example username, password,address etc..  */
 <?php session_start(); ?>
 <?php if (!isset($_SESSION['token'])) : ?>
     <?php header("Location: ../login.php"); ?>

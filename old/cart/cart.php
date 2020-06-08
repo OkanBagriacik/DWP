@@ -1,4 +1,3 @@
-/* cart page, shows the products in the current user cart */
 <?php
 include '../db_extension.php';
 session_start();
@@ -18,9 +17,12 @@ if (isset($_GET['type'])) {
 
 $cartProducts =  getCartProducts();
 $totalCost = 0;
-foreach ($cartProducts as $product) {
-  $totalCost += $product['ProductQuantity'] * $product['Price'];
+if ($cartProducts != null) {
+  foreach ($cartProducts as $product) {
+    $totalCost += $product['ProductQuantity'] * $product['Price'];
+  }
 }
+
 
 ?>
 
@@ -207,7 +209,7 @@ foreach ($cartProducts as $product) {
     padding: 7px !important;">+</a>
                           </td>
                           <td>
-                            <?php echo $totalCost?>₺
+                            <?php echo $totalCost ?>₺
                           </td>
                           <td>
                             <a href="./cart.php?type=remove&productId=<?php echo $cartProducts[$index]["ProductID"] ?>" class="btn btn-outline-primary" style="color:red; margin: 5px 5px 0px 5px !important;

@@ -1,4 +1,3 @@
-/* removes a product from database */
 <?php
 include '../db_extension.php';
 ?>

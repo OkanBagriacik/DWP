@@ -1,3 +1,4 @@
+/* creates a new product */
 <?php if (!empty($_POST)) : ?>
     <?php
     include '../db_extension.php';

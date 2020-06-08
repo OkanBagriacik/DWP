@@ -1,5 +1,4 @@
 <?php
-// establishes a connection to application database
 function connectDb()
 {
     $servername = "localhost";
@@ -17,7 +16,6 @@ function connectDb()
     return $conn;
 }
 
-// creates a new user and add to database
 function createUser($firstname, $lastname, $userName, $email, $UserPassword, $address, $usertype)
 {
     if (empty($usertype)) $usertype = "Customer";
@@ -36,7 +34,6 @@ function createUser($firstname, $lastname, $userName, $email, $UserPassword, $ad
     $conn->close();
 }
 
-// logs in the registered user upon correct user info entered in the form
 function login($username, $password)
 {
     $conn = connectDb();
@@ -50,7 +47,7 @@ function login($username, $password)
 
     return null;
 };
-// get the current user information
+
 function getUser()
 {
     $conn = connectDb();
@@ -64,7 +61,7 @@ function getUser()
 
     return null;
 }
-// updates the user data in the database
+
 function updateUser($firstname, $lastname, $username, $email, $password, $address)
 {
     $conn = connectDb();
@@ -76,7 +73,7 @@ function updateUser($firstname, $lastname, $username, $email, $password, $addres
     }
 }
 
-// add a  new product to the database
+
 function addProduct($productname, $productCategoryId, $price, $description, $imageurl)
 {
     $conn = connectDb();
@@ -94,7 +91,6 @@ function addProduct($productname, $productCategoryId, $price, $description, $ima
     $conn->close();
 }
 
-// gets the product with the specified product id
 function getProduct($productId)
 {
     $conn = connectDb();
@@ -112,7 +108,6 @@ function getProduct($productId)
     }
 }
 
-// update a product with the new entered product data
 function updateProduct($productId, $productname, $price, $description, $imageurl)
 {
     $conn = connectDb();
@@ -126,7 +121,7 @@ function updateProduct($productId, $productname, $price, $description, $imageurl
     return false;
 }
 
-// gets all the products from the database
+
 function getAllProducts()
 {
     $conn = connectDb();
@@ -148,7 +143,6 @@ function getAllProducts()
     }
 }
 
-// deletes the product with the specified product id
 function deleteProduct($productId)
 {
     $conn = connectDb();
@@ -162,7 +156,7 @@ function deleteProduct($productId)
 }
 
 // product category operations 
-//get a product category with the spedified id from the database
+
 function getProductCategoryById($categoryId)
 {
     $conn = connectDb();
@@ -180,7 +174,6 @@ function getProductCategoryById($categoryId)
     }
 }
 
-// adds a neew product category to the database
 function addCategory($categoryName)
 {
     $conn = connectDb();
@@ -198,7 +191,6 @@ function addCategory($categoryName)
     $conn->close();
 }
 
-// deletes a product category from the database
 function deleteCategory($categoryId)
 {
     $conn = connectDb();
@@ -212,7 +204,6 @@ function deleteCategory($categoryId)
     return false;
 }
 
-// retrieves all the product categories from the database
 function listCategories()
 {
     $conn = connectDb();
@@ -234,7 +225,6 @@ function listCategories()
     }
 }
 
-// change a specified product category info
 function editProductCategory($categoryId, $categoryName)
 {
     $conn = connectDb();
@@ -248,8 +238,7 @@ function editProductCategory($categoryId, $categoryName)
     return false;
 }
 
-// cart operations 
-// get all products in the cart
+// cart operations
 function getCartProducts()
 {
     $sessionId = session_id();
@@ -273,7 +262,6 @@ function getCartProducts()
     }
 }
 
-// get cart data (sessionId, cartId, totalCost)
 function getCart()
 {
     $sessionId = session_id();
@@ -294,7 +282,6 @@ function getCart()
     }
 }
 
-// add a new product to the cart, and save the data to the database
 function addToCart($productId)
 {
     $cart = getCart();
@@ -338,7 +325,6 @@ function addToCart($productId)
     }
 }
 
-// change a product quantity in the database
 function updateCart($productId, $updatedQuantity)
 {
     $cart = getCart();
@@ -353,7 +339,6 @@ function updateCart($productId, $updatedQuantity)
     return false;
 }
 
-// remove an added product from the cart 
 function deleteProductFromCart($productId)
 {
     $cart = getCart();
@@ -369,7 +354,6 @@ function deleteProductFromCart($productId)
     return false;
 }
 
-// decrement a cart producti for instance if a there are 4 apple in the cart, make it 3
 function deleteFromCart($productId)
 {
     $cartProducts = getCartProducts();
@@ -388,7 +372,6 @@ function deleteFromCart($productId)
     }
 }
 
-//create a new cart for the logged in user
 function createCart()
 {
     $conn = connectDb();
@@ -407,7 +390,7 @@ function createCart()
     $conn->close();
 }
 
-//confim order and updated the cart status (this  function changes a column in the databaase, it updates "ConfirmedStatus" column to true to indicate that a cart is confirmed)
+//confim order
 function confirmOrder()
 {
     $cart = getCart();

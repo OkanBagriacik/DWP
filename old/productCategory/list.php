@@ -1,4 +1,3 @@
-/* lists all the product categories saved to the database */
 <?php
 session_start();
 if (!$_SESSION['token']) {

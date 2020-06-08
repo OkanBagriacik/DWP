@@ -1,4 +1,3 @@
-/*  let the user to choose a payment option */
 <?php
 include '../db_extension.php';
 session_start();
@@ -11,7 +10,6 @@ session_start();
   $result = confirmOrder();
 
   if ($result) {
-    session_regenerate_id();
     header("location: success.php");
   } else $resultError = true;
   ?>
@@ -20,9 +18,12 @@ session_start();
 
   $cartProducts =  getCartProducts();
   $totalCost = 0;
-  foreach ($cartProducts as $product) {
-    $totalCost += $product['ProductQuantity'] * $product['Price'];
+  if($cartProducts != null){
+    foreach ($cartProducts as $product) {
+      $totalCost += $product['ProductQuantity'] * $product['Price'];
+    }
   }
+  
 
   ?>
   <!DOCTYPE html>

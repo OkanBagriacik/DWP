@@ -1,4 +1,3 @@
-/* start page(main page) application starts from this page*/
 <?php
 include './db_extension.php';
 session_start();
